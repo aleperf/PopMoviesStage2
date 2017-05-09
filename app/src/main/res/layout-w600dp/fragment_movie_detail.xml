@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/padding_bottom_ll"
+        android:paddingEnd="@dimen/detail_general_padding"
+        android:paddingLeft="@dimen/padding_start_end_ll"
+        android:paddingRight="@dimen/detail_general_padding"
+        android:paddingStart="@dimen/padding_start_end_ll"
+        android:paddingTop="@dimen/padding_top_ll">
+
+        <ImageView
+            android:id="@+id/movie_poster_detail"
+            android:layout_width="@dimen/movie_poster_width"
+            android:layout_height="@dimen/movie_poster_height"
+            android:contentDescription="@string/cd_movie_poster"
+            tools:src="@drawable/no_preview_pop" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingEnd="@dimen/detail_general_padding"
+            android:paddingLeft="@dimen/padding_poster_side_content"
+            android:paddingRight="@dimen/detail_general_padding"
+            android:paddingStart="@dimen/padding_poster_side_content"
+            android:paddingTop="@dimen/padding_poster_side_content">
+
+
+            <TextView
+                style="@style/DetailTitleDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/date_description" />
+
+            <TextView
+                style="@style/LineSeparator"
+                android:layout_width="@dimen/line_separator_width"
+                android:layout_height="@dimen/line_separator_height" />
+
+            <TextView
+                android:id="@+id/year_detail"
+                style="@style/DetailContentText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/tool_date" />
+
+
+            <TextView
+                style="@style/DetailTitleDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="21dp"
+                android:text="@string/rating_description" />
+
+            <TextView
+                style="@style/LineSeparator"
+                android:layout_width="@dimen/line_separator_width"
+                android:layout_height="@dimen/line_separator_height" />
+
+            <RatingBar
+                android:id="@+id/rating_bar"
+                style="?attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:paddingBottom="4dp"
+                android:paddingLeft="2dp"
+                android:paddingTop="8dp"
+                android:rating="3.5"
+                android:scaleX="1.1"
+                android:scaleY="1.1"
+                android:stepSize="0.1"
+                android:theme="@style/YellowRatingBarSmall" />
+
+            <TextView
+                android:id="@+id/rating_detail"
+                style="@style/DetailContentText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/tool_rating" />
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/favorite_button"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/prize1_gray"
+            android:padding="8dp"
+            android:textColor="@color/button_fav_text_color"
+            tools:text="@string/button_marked_as_fav" />
+
+    </LinearLayout>
+
+    <TextView
+        style="@style/DetailTitleDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/detail_margin_left"
+        android:layout_marginStart="@dimen/detail_margin_left"
+        android:paddingTop="@dimen/original_title_padding_top"
+        android:text="@string/original_title_description" />
+
+    <TextView
+        style="@style/LineSeparator"
+        android:layout_width="@dimen/line_separator_width"
+        android:layout_height="@dimen/line_separator_height"
+        android:layout_marginLeft="@dimen/detail_margin_left"
+        android:layout_marginStart="@dimen/detail_margin_left" />
+
+    <TextView
+        android:id="@+id/original_title"
+        style="@style/DetailContentText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/detail_original_title_mr"
+        android:layout_marginLeft="@dimen/detail_margin_left"
+        android:layout_marginRight="@dimen/detail_original_title_mr"
+        android:layout_marginStart="@dimen/detail_margin_left"
+        tools:text="@string/tool_original_title" />
+
+
+    <TextView
+        style="@style/DetailTitleDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingEnd="@dimen/detail_general_padding"
+        android:paddingLeft="@dimen/detail_margin_left"
+        android:paddingRight="@dimen/detail_general_padding"
+        android:paddingStart="@dimen/detail_margin_left"
+        android:paddingTop="@dimen/detail_syn_padding_top"
+        android:text="@string/synopsis_description"
+        android:textSize="@dimen/detail_content_description" />
+
+    <TextView
+        style="@style/LineSeparator"
+        android:layout_width="100dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/detail_margin_left"
+        android:layout_marginStart="@dimen/detail_margin_left" />
+
+    <TextView
+        android:id="@+id/synopsis_detail"
+        style="@style/DetailContentText"
+        android:layout_marginLeft="@dimen/detail_margin_left"
+        android:layout_marginRight="@dimen/detail_margin_left"
+        android:paddingBottom="@dimen/detail_syn_padding_bottom"
+        android:paddingTop="16dp"
+        tools:text="@string/lorem_ipsum" />
+
+    <TextView
+        style="@style/LineSeparator"
+        android:layout_width="100dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/detail_margin_left"
+        android:layout_marginStart="@dimen/detail_margin_left" />
+
+    <include layout="@layout/reviews" />
+
+    <TextView
+        style="@style/LineSeparator"
+        android:layout_width="100dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/detail_margin_left"
+        android:layout_marginStart="@dimen/detail_margin_left" />
+
+
+</LinearLayout>

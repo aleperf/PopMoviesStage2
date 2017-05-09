@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/main_content"
+    android:paddingBottom="24dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_reviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="80dp"
+            android:background="@color/reviews_toolbar"
+            app:elevation="@dimen/toolbar_elevation"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+            <TextView
+                android:id="@+id/reviews_movie_title"
+                android:text="@string/reviews_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textColor="@color/detail_header_title"
+                android:textSize="@dimen/detail_header_title" />
+
+
+        </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/reviews_empty_view"
+        android:text="@string/review_empty_view_text"
+        style="@style/EmptyViewRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/reviews_recycler_view"
+        android:layout_gravity="center_horizontal"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp" />
+
+
+</LinearLayout>

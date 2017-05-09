@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="video"
+            type="example.aleperf.com.popmovies.VideoTrailer" />
+    </data>
+
+  <LinearLayout
+      android:id="@+id/video_item_view"
+
+      android:layout_width="@dimen/trailer_item_width"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:layout_margin="8dp"
+      android:padding="8dp"
+      android:elevation="4dp"
+      android:background="@color/videos_color_background"
+      android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/trailer_item_arrow"
+            android:layout_gravity="center_vertical"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:srcCompat="@drawable/ic_play_arrow_white_48px"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp" />
+
+      <LinearLayout
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/trailer_title"
+            style="@style/VideoTrailerTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxWidth="400dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@{video.title}"
+            app:layout_constraintLeft_toRightOf="@+id/trailer_item_arrow"
+            app:layout_constraintTop_toTopOf="parent"
+            android:inputType="textMultiLine"
+            tools:text="Video Trailer International # 1" />
+
+        <TextView
+            android:id="@+id/trailer_subtitle"
+            android:layout_width="wrap_content"
+
+           android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="@{video.typeOfVideo}"
+            tools:text="trailer"
+            android:layout_marginTop="8dp"
+            style="@style/VideoTrailerSubtitle" />
+
+      </LinearLayout>
+
+
+  </LinearLayout>
+</layout>

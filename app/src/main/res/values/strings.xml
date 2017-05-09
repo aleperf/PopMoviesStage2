@@ -1,0 +1,78 @@
+<resources>
+    <string name="app_name">Pop Movies</string>
+    <!-- - - - - - - - - - - -->
+    <!--Used by activity_main, home screen empty view  -->
+    <!-- - - - - - - - - - - -->
+    <string name="empty_view_message">Tons of great movies are waiting to be discovered.
+        Please check for a good connection and tap the pop corn picture to try a new search.</string>
+
+    <string name="empty_view_favorites_message">At the moment there are no movies in your favorites,
+    switch to a different search and find the movies you like!</string>
+    <string name="toast_msg_empty_view">Pop Movies is Searching Again</string>
+
+    <!-- content descriptions -->
+    <string name="cd_logo">pop corn movie logo</string>
+    <string name="cd_movie_poster">movie poster</string>
+
+
+    <!-- - - - - - - - - - - -->
+    <!--Used by Preferences  -->
+    <!-- - - - - - - - - - - -->
+
+    <string name="pref_search_title">Show Movie By</string>
+    <string name="pref_search_top_rated_label">Top Rated</string>
+    <string name="pref_search_most_pop_label">Most Popular</string>
+    <string name="pref_search_favorites_label">Favorites</string>
+    <string name="pref_search_key" translatable="false">search by</string>
+    <string name="pref_search_top_rated_value">query top rated</string>
+    <string name="pref_search_most_pop_value">query most popular</string>
+    <string name="pref_search_favorites_value">query favorites</string>
+
+    <!-- - - - - - - - - - - -->
+    <!--Used by menu_main  -->
+    <!-- - - - - - - - - - - -->
+    <string name="action_settings">Settings</string>
+
+    <!-- - - - - - - - - - - -->
+    <!--Used by detail_activity -->
+    <!-- - - - - - - - - - - -->
+
+    <string name="date_description">Release Date</string>
+    <string name="rating_description">Rating</string>
+    <string name="synopsis_description">Synopsis</string>
+    <string name="original_title_description">Original Title</string>
+    <string name="button_marked_as_fav">In Your Favorites</string>
+    <string name="button_not_fav">Mark as Favorite</string>
+
+
+    <!-- - - - - - - - - - - -->
+    <!-- tools strings      !-->
+    <!-- - - - - - - - - - - -->
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet,
+        consectetur adipiscing elit, sed do eiusmod tempor
+        incididunt ut labore et dolore magna aliqua. Ut enim
+        ad minim veniam, quis nostrud exercitation ullamco laboris nisi</string>
+    <string name="tool_movie_title">Movie Title</string>
+    <string name="tool_original_title">A very original title</string>
+    <string name="tool_rating">8.1/10</string>
+    <string name="tool_date">Jan 7, 2017</string>
+
+    <!-- - - - - - - - - - - -->
+    <!-- Reviews strings    !-->
+    <!-- - - - - - - - - - - -->
+    <string name="reviews_title">Reviews</string>
+    <string name="review_author">Author:\u0020 </string>
+    <string name="review_empty_view_text">No reviews for this movie at the moment.</string>
+
+    <!-- - - - - - - - - - -      -->
+    <!-- Video Trailers  strings !-->
+    <!-- - - - - - - - - -        -->
+   <string name="fab_button_no_share">No Video to Share</string>
+    <string name="share_subject">"Sharing video"</string>
+    <string name="share_title">Share First Video Url</string>
+    <string name="fab_button_share_text">Watch this awesome video recommended by the Pop Movies App! \n</string>
+    <string name="video_trailer_title">Videos, Trailers and Featurettes</string>
+    <string name="video_trailer_no_video">No videos for this movie at the moment.</string>
+
+
+</resources>

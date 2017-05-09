@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="example.aleperf.com.popmovies">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".SettingsActivity" />
+        <!-- This is required for immediate syncs -->
+        <service
+            android:name=".sync.PopMoviesSyncIntentService"
+            android:exported="false" />
+        <!-- Our ContentProvider -->
+        <provider
+            android:name=".data.MoviesProvider"
+            android:authorities="example.aleperf.com.popmovies"
+            android:exported="false" />
+
+        <activity
+            android:name=".MovieDetailActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".ReviewsActivity" />
+        <activity android:name=".VideosActivity" />
+
+        <service
+            android:name=".data.FavoritesIntentService"
+            android:exported="false"></service>
+        <service android:name=".sync.PopMoviesFirebaseJobService"
+            android:exported="false"></service>
+    </application>
+
+</manifest>

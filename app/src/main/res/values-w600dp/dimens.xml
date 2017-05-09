@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- review dialog fragment dimens percentage -->
+    <item name="reviews_dialog_width" type="dimen" format="float">0.75</item>
+    <dimen name="detail_margin_left">18dp</dimen>
+    <dimen name="trailer_item_width">350dp</dimen>
+    <dimen name="fab_button_margin">24dp</dimen>
+    <dimen name="movie_poster_width">220dp</dimen>
+    <dimen name="movie_poster_height">330dp</dimen>
+    <dimen name="square_icon_side">80dp</dimen>
+</resources>
