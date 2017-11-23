@@ -29,9 +29,10 @@ public class MoviesDbHelper extends SQLiteOpenHelper {
                 FavoriteMoviesEntry.COLUMN_ORIGINAL_TITLE + " TEXT NOT NULL, " +
                 FavoriteMoviesEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
                 FavoriteMoviesEntry.COLUMN_POSTER_PATH + " TEXT, " +
+                FavoriteMoviesEntry.COLUMN_BACKDROP_PATH + " TEXT, " +
                 FavoriteMoviesEntry.COLUMN_PLOT_SYNOPSIS + " TEXT, " +
                 FavoriteMoviesEntry.COLUMN_RATING + " REAL NOT NULL DEFAULT 0, " +
-                FavoriteMoviesEntry.COLUMN_RELEASE_DATE + " INTEGER, " +
+                FavoriteMoviesEntry.COLUMN_RELEASE_DATE + " TEXT NOT NULL, " +
                 " UNIQUE (" + FavoriteMoviesEntry.COLUMN_MOVIE_ID + ") ON CONFLICT REPLACE);";
 
         final String SQL_CREATE_MOST_POPULAR_TABLE = "CREATE TABLE " + MoviesContract.MostPopuplarMoviesEntry.TABLE_NAME + COLUMNS;

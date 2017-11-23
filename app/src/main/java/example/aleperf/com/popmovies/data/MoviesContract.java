@@ -43,6 +43,11 @@ public class MoviesContract {
          * path to the  poster of the movie
          **/
         public static final String COLUMN_POSTER_PATH = "poster_path";
+        /**
+         * path to the backdrop poster for the movie detail.
+         **/
+
+        public static final String COLUMN_BACKDROP_PATH = "backdrop_path";
 
         /**
          * synopsis of the movie
@@ -58,6 +63,8 @@ public class MoviesContract {
          * release date of the movie
          **/
         public static final String COLUMN_RELEASE_DATE = "release_date";
+
+
 
 
     }

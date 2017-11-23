@@ -3,6 +3,9 @@ package example.aleperf.com.popmovies.utilities;
 import android.content.ContentValues;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,89 +59,23 @@ public class JSONUtils {
      * @throws JSONException
      */
 
-    public static List<Movie> getMovieList(String jsonString) throws JSONException {
 
-        ArrayList<Movie> movieList = new ArrayList<>();
-
-        JSONObject movieJson = new JSONObject(jsonString);
-
-        // Is there an error?
-        //TheMovieDb send a status code only in case of errors
-
-        if (movieJson.has(STATUS_CODE)) {
-            int errorCode = movieJson.getInt(STATUS_CODE);
-            switch (errorCode) {
-                case INVALID_API_KEY:
-                    Log.d(TAG, "Invalid API KEY");
-                    return null;
-                case NOT_FOUND:
-                    Log.d(TAG, "bad request");
-                    return null;
-                default:
-                    /* Server probably down */
-                    return null;
-            }
-        }
-
-        JSONArray results = movieJson.getJSONArray(ARRAY_OF_MOVIES);
-
-        for (int i = 0; i < results.length(); i++) {
-            JSONObject movieItem = results.getJSONObject(i);
-            String id = movieItem.getString(MOVIE_ID);
-            String originalTitle = movieItem.getString(ORIGINAL_TITLE);
-            String title = movieItem.getString(TITLE);
-            String posterPath = movieItem.getString(POSTER_PATH).replace("/", "");
-            if (posterPath.equals("null")) {
-                posterPath = null;
-            }
-            String plotSynopsis = movieItem.getString(SYNOPSIS);
-            long releaseDate = MovieUtils.getTimeInMilliseconds(movieItem.getString(RELEASE_DATE));
-            Double rating = movieItem.getDouble(RATING);
-            Movie movie = new Movie(id, originalTitle, title, posterPath, plotSynopsis, releaseDate, rating);
-            movieList.add(movie);
-
-
-        }
-
-        return movieList;
-    }
 
     public static ContentValues[] getContentValuesFromJson(String jsonString) throws JSONException {
 
-        JSONObject movieJson = new JSONObject(jsonString);
+        List<Movie> movies = getMovieList(jsonString);
+        ContentValues[] movieValues = new ContentValues[movies.size()];
 
-        // Is there an error?
-        //TheMovieDb send a status code only in case of errors
+        for (int i = 0; i < movies.size(); i++) {
+            Movie movie = movies.get(i);
 
-        if (movieJson.has(STATUS_CODE)) {
-            int errorCode = movieJson.getInt(STATUS_CODE);
-            switch (errorCode) {
-                case INVALID_API_KEY:
-                    Log.d(TAG, "Invalid API KEY");
-                    return null;
-                case NOT_FOUND:
-                    Log.d(TAG, "bad request");
-                    return null;
-                default:
-                    /* Server probably down */
-                    return null;
-            }
-        }
-        JSONArray results = movieJson.getJSONArray(ARRAY_OF_MOVIES);
-        ContentValues[] movieValues = new ContentValues[results.length()];
-
-        for (int i = 0; i < results.length(); i++) {
-            JSONObject movieItem = results.getJSONObject(i);
-            String id = movieItem.getString(MOVIE_ID);
-            String originalTitle = movieItem.getString(ORIGINAL_TITLE);
-            String title = movieItem.getString(TITLE);
-            String posterPath = movieItem.getString(POSTER_PATH).replace("/", "");
-            if(posterPath.equals("null")){
-                posterPath = null;
-            }
-            String plotSynopsis = movieItem.getString(SYNOPSIS);
-            long releaseDate = MovieUtils.getTimeInMilliseconds(movieItem.getString(RELEASE_DATE));
-            double rating = movieItem.getDouble(RATING);
+            String id = movie.getMovieId();
+            String originalTitle = movie.getOriginalTitle();
+            String title = movie.getTitle();
+            String posterPath = movie.getPosterPath();
+            String plotSynopsis = movie.getPlotSynopsis();
+            long releaseDate = MovieUtils.getTimeInMilliseconds(movie.getReleaseDate());
+            double rating = movie.getRating();
 
 
             ContentValues value = new ContentValues();
@@ -191,6 +128,43 @@ public class JSONUtils {
 
       return videoList;
     }
+    /**
+     * Build a list of movies from a JSON string obtained from a query to TheMovieDb
+     * @param jsonString a JSON string returned by a query to TheMovieDb
+     * @return a list of Movies
 
+     */
+
+    public static List<Movie> getMovieList(String jsonString) {
+
+        Gson gson = new Gson();
+        MovieQuery query = gson.fromJson(jsonString, MovieQuery.class);
+        Integer statusCode = query.getStatusCode();
+        //TheMovieDB sends a status code only in case of error
+        //if there is a status code, the query is invalid
+        if(statusCode != null){
+            return null;
+        }
+
+        return query.getResults();
+    }
+
+
+    public class MovieQuery {
+        @SerializedName("status_code")
+        Integer statusCode;
+        @SerializedName("results")
+        List<Movie> movieResults;
+
+        List<Movie> getResults() {
+            return movieResults;
+        }
+
+        Integer getStatusCode(){
+            return statusCode;
+        }
+
+
+    }
 
 }

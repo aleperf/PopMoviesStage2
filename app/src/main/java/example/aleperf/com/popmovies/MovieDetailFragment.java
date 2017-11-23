@@ -51,6 +51,7 @@ public class MovieDetailFragment extends Fragment implements
             MoviesContract.MovieEntry.COLUMN_ORIGINAL_TITLE,
             MoviesContract.MovieEntry.COLUMN_TITLE,
             MoviesContract.MovieEntry.COLUMN_POSTER_PATH,
+            MoviesContract.MovieEntry.COLUMN_BACKDROP_PATH,
             MoviesContract.MovieEntry.COLUMN_PLOT_SYNOPSIS,
             MoviesContract.MovieEntry.COLUMN_RATING,
             MoviesContract.MovieEntry.COLUMN_RELEASE_DATE
@@ -60,9 +61,10 @@ public class MovieDetailFragment extends Fragment implements
     private static final int INDEX_ORIGINAL_TITLE = 0;
     private static final int INDEX_TITLE = 1;
     private static final int INDEX_POSTER_PATH = 2;
-    private static final int INDEX_PLOT_SYNOPSIS = 3;
-    private static final int INDEX_RATING = 4;
-    private static final int INDEX_RELEASE_DATE = 5;
+    private static final int INDEX_BACKDROP_PATH = 3;
+    private static final int INDEX_PLOT_SYNOPSIS = 4;
+    private static final int INDEX_RATING = 5;
+    private static final int INDEX_RELEASE_DATE = 6;
 
     //fields
     private String mMovieId;
@@ -194,16 +196,17 @@ public class MovieDetailFragment extends Fragment implements
             String originalTitle = data.getString(INDEX_ORIGINAL_TITLE);
             String title = data.getString(INDEX_TITLE);
             String posterPath = data.getString(INDEX_POSTER_PATH);
+            String backdropPath = data.getString(INDEX_BACKDROP_PATH);
             String plotSynopsis = data.getString(INDEX_PLOT_SYNOPSIS);
             double rating = data.getFloat(INDEX_RATING);
-            Long timeInMilliseconds = data.getLong(INDEX_RELEASE_DATE);
+            String date  = data.getString(INDEX_RELEASE_DATE);
 
             mOriginalTitle.setText(originalTitle);
 
             mSynopsis.setText(plotSynopsis);
             mRatingDetail.setText(MovieUtils.formatRating(rating));
             mRatingBar.setRating(((float)rating) / 2);
-            mDate.setText(MovieUtils.formatTime(timeInMilliseconds));
+            mDate.setText(MovieUtils.formatDate(date));
             if (posterPath != null) {
                 Uri imagePath = NetworkUtils.buildImageUri(posterPath);
                 Picasso.with(getContext()).load(imagePath).fit().error(R.drawable.no_preview_pop).into(mPosterImage);
@@ -218,8 +221,7 @@ public class MovieDetailFragment extends Fragment implements
                 mFavoriteButton.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.prize1_gray));
             }
 
-           mMovie = new Movie(mMovieId, originalTitle, title, posterPath,
-                   plotSynopsis, timeInMilliseconds, rating);
+           mMovie = new Movie(mMovieId, originalTitle, title,plotSynopsis,rating, date, posterPath, backdropPath);
         }
 
 

@@ -25,31 +25,15 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //inflate toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         PopMoviesSyncUtils.initialize(this);
 
 
         FragmentManager fm = getSupportFragmentManager();
         //if this is the first time the app is initialized, add the needed fragment
-        if (savedInstanceState == null) {
-            MovieGridFragment fragment = MovieGridFragment.newInstance();
-            fm.beginTransaction().add(R.id.movie_grid_fragment_container, fragment, MovieGridFragment.TAG).commit();
-
-        } else {
-            //search for if the fragment already exists
-            MovieGridFragment movieGridFragment = (MovieGridFragment) fm.findFragmentByTag(MovieGridFragment.TAG);
-            if (movieGridFragment != null) {
-                fm.beginTransaction().replace(R.id.movie_grid_fragment_container, movieGridFragment, MovieGridFragment.TAG).commit();
-
-            } else {// the fragment doesn't exist
-                MovieGridFragment fragment = MovieGridFragment.newInstance();
-                fm.beginTransaction().replace(R.id.movie_grid_fragment_container, fragment, MovieGridFragment.TAG).commit();
-
-
-            }
-
-        }
+        MovieGridFragment movieGridFragment = MovieGridFragment.newInstance();
+        fm.beginTransaction().replace(R.id.movie_grid_fragment_container, movieGridFragment, MovieGridFragment.TAG).commit();
 
     }
 

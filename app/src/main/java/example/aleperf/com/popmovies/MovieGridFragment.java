@@ -14,12 +14,10 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,10 +25,6 @@ import android.widget.Toast;
 import example.aleperf.com.popmovies.data.MoviesContract;
 import example.aleperf.com.popmovies.data.MoviesProvider;
 import example.aleperf.com.popmovies.sync.PopMoviesSyncTask;
-import example.aleperf.com.popmovies.sync.PopMoviesSyncUtils;
-import example.aleperf.com.popmovies.utilities.NetworkUtils;
-
-import static android.os.Build.VERSION_CODES.M;
 
 
 /**
@@ -56,15 +50,14 @@ public class MovieGridFragment extends Fragment implements
 
     private final static int GRID_LOADER_ID = 10;
 
-    private MovieAdapter mAdapter;
-    private RecyclerView mRecyclerView;
-    private ProgressBar mProgressBar;
+    private MovieAdapter adapter;
+    private RecyclerView recyclerView;
+    private ProgressBar progressBar;
 
-    private TextView mEmptyTextView;
-    private NestedScrollView  mEmptyScrollView;
-    private ImageView mEmptyViewImage;
-    private Uri mActualTable;
-
+    private TextView emptyTextView;
+    private NestedScrollView emptyScrollView;
+    private ImageView emptyViewImage;
+    private Uri actualTable;
 
 
     public MovieGridFragment() {
@@ -83,25 +76,25 @@ public class MovieGridFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_movie_grid, container, false);
         setCurrentTable();
-        mProgressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar_grid);
+        progressBar = rootView.findViewById(R.id.progress_bar_grid);
         //inflate empty view elements
-        mEmptyScrollView = (NestedScrollView) rootView.findViewById(R.id.empty_view_home_screen);
-        mEmptyTextView = (TextView)rootView.findViewById(R.id.empty_view_message);
-        mEmptyViewImage = (ImageView) rootView.findViewById(R.id.empty_view_image);
-        mEmptyViewImage.setOnClickListener(new View.OnClickListener(){
+        emptyScrollView = rootView.findViewById(R.id.empty_view_home_screen);
+        emptyTextView = rootView.findViewById(R.id.empty_view_message);
+        emptyViewImage = rootView.findViewById(R.id.empty_view_image);
+        emptyViewImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PopMoviesSyncTask.syncPopMoviesDatabase(getActivity());
-                Toast.makeText(getActivity(),getString(R.string.toast_msg_empty_view),  Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.toast_msg_empty_view), Toast.LENGTH_SHORT).show();
                 getActivity().getSupportLoaderManager().restartLoader(GRID_LOADER_ID, null, MovieGridFragment.this);
             }
         });
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_main);
-        mAdapter = new MovieAdapter(getContext());
-        mRecyclerView.setAdapter(mAdapter);
+        recyclerView = rootView.findViewById(R.id.recycler_view_main);
+        adapter = new MovieAdapter(getContext());
+        recyclerView.setAdapter(adapter);
         int numOfColumns = getResources().getInteger(R.integer.grid_layout_num_columns);
         GridLayoutManager manager = new GridLayoutManager(getContext(), numOfColumns);
-        mRecyclerView.setLayoutManager(manager);
+        recyclerView.setLayoutManager(manager);
 
         getActivity().getSupportLoaderManager().initLoader(GRID_LOADER_ID, null, this);
 
@@ -109,15 +102,13 @@ public class MovieGridFragment extends Fragment implements
     }
 
 
-
-
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        mProgressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
 
 
         return new CursorLoader(getContext(),
-                mActualTable,
+                actualTable,
                 MOVIE_GRID_PROJECTION,
                 null,
                 null,
@@ -131,33 +122,33 @@ public class MovieGridFragment extends Fragment implements
         String querySearch = preferences.getString(getString(R.string.pref_search_key),
                 getString(R.string.pref_search_most_pop_value));
         if (querySearch.equals(getString(R.string.pref_search_most_pop_value))) {
-            mActualTable = MoviesContract.MostPopuplarMoviesEntry.CONTENT_URI;
+            actualTable = MoviesContract.MostPopuplarMoviesEntry.CONTENT_URI;
 
         } else if (querySearch.equals(getString(R.string.pref_search_top_rated_value))) {
-            mActualTable = MoviesContract.TopRatedMoviesEntry.CONTENT_URI;
+            actualTable = MoviesContract.TopRatedMoviesEntry.CONTENT_URI;
 
         } else {
-            mActualTable = MoviesContract.FavoriteMoviesEntry.CONTENT_URI;
+            actualTable = MoviesContract.FavoriteMoviesEntry.CONTENT_URI;
         }
     }
 
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        mProgressBar.setVisibility(View.GONE);
-        if(data == null || data.getCount()== 0){
+        progressBar.setVisibility(View.GONE);
+        if (data == null || data.getCount() == 0) {
             showEmptyView();
         } else {
             data.moveToFirst();
             hideEmptyView();
         }
-        mAdapter.swapCursor(data, mActualTable);
+        adapter.swapCursor(data, actualTable);
 
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        mAdapter.swapCursor(null, null);
+        adapter.swapCursor(null, null);
     }
 
     @Override
@@ -167,29 +158,29 @@ public class MovieGridFragment extends Fragment implements
         getActivity().getSupportLoaderManager().restartLoader(GRID_LOADER_ID, null, this);
     }
 
-    public void showEmptyView(){
+    public void showEmptyView() {
         //show a different empty view  for different tables
         UriMatcher matcher = MoviesProvider.buildUriMatcher();
-        int match = matcher.match(mActualTable);
-        switch(match){
+        int match = matcher.match(actualTable);
+        switch (match) {
             case MoviesProvider.CODE_FAVORITES:
-                mEmptyScrollView.setVisibility(View.VISIBLE);
-                mEmptyViewImage.setVisibility(View.GONE);
-                mEmptyTextView.setVisibility(View.VISIBLE);
-                mEmptyTextView.setText(getString(R.string.empty_view_favorites_message));
+                emptyScrollView.setVisibility(View.VISIBLE);
+                emptyViewImage.setVisibility(View.GONE);
+                emptyTextView.setVisibility(View.VISIBLE);
+                emptyTextView.setText(getString(R.string.empty_view_favorites_message));
                 break;
             default:
-                mEmptyScrollView.setVisibility(View.VISIBLE);
-                mEmptyViewImage.setVisibility(View.VISIBLE);
-                mEmptyTextView.setVisibility(View.VISIBLE);
-                mEmptyTextView.setText(getString(R.string.empty_view_message));
+                emptyScrollView.setVisibility(View.VISIBLE);
+                emptyViewImage.setVisibility(View.VISIBLE);
+                emptyTextView.setVisibility(View.VISIBLE);
+                emptyTextView.setText(getString(R.string.empty_view_message));
 
         }
 
     }
 
-    public void hideEmptyView(){
-       mEmptyScrollView.setVisibility(View.GONE);
+    public void hideEmptyView() {
+        emptyScrollView.setVisibility(View.GONE);
     }
 
 }

@@ -11,6 +11,7 @@ import android.util.Log;
 import example.aleperf.com.popmovies.data.MoviesContract.FavoriteMoviesEntry;
 
 import example.aleperf.com.popmovies.Movie;
+import example.aleperf.com.popmovies.utilities.MovieUtils;
 
 
 /**
@@ -87,13 +88,13 @@ public class FavoritesIntentService extends IntentService {
      */
     private void handleActionInsert(Movie movie) {
         //extract data from movie
-        String movieId = movie.getId();
+        String movieId = movie.getMovieId();
         String originalTitle = movie.getOriginalTitle();
         String title = movie.getTitle();
         String posterPath = movie.getPosterPath();
         String plotSynopsis = movie.getPlotSynopsis();
         double rating = movie.getRating();
-        long releaseDate = movie.getReleaseDate();
+        long releaseDate = MovieUtils.getTimeInMilliseconds(movie.getReleaseDate());
         //create a content values object and fill it with column fields
         ContentValues values = new ContentValues();
         values.put(FavoriteMoviesEntry.COLUMN_MOVIE_ID, movieId);
