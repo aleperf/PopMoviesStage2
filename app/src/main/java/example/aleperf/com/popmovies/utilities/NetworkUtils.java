@@ -37,25 +37,17 @@ import example.aleperf.com.popmovies.BuildConfig;
 public class NetworkUtils {
 
     //constants used to build the query to TheMovieDB
-
-    private static final String MOVIE_DB_DISCOVER_BASE_URL = "https://api.themoviedb.org/3/discover/movie";
     private static final String MOVIE_DB_BASE_URL = "https://api.themoviedb.org/3/movie";
     private static final String REVIEWS_DIR = "reviews";
     private static final String VIDEO_DIR = "videos";
+    private static final String POPULAR = "popular";
+    private static final String TOP_RATED = "top_rated";
     //TODO: insert the following line of code, with a valid API KEY between the quotes,
     // in the gradle.properties file:
     //  THE_MOVIE_DB_API_KEY = "YOUR API KEY HERE"
     private static final String MOVIE_DB_API_KEY = BuildConfig.MY_API_KEY;
     private static final String PARAM_API_KEY = "api_key";
-    private static final String PARAM_SORT_BY = "sort_by";
     private static final String PARAM_PAGE = "page";
-    //add a filter to limit high rated, but too little known movies, based on number of ratings
-    // VOTE_COUNT_GTE should be greater then or equal to 200
-    private static final String PARAM_VOTE_COUNT_GTE = "vote_count.gte";
-    private static final String VOTE_COUNT_GTE = "200";
-
-    private static final String SORT_POPULARITY_DESC = "popularity.desc";
-    private static final String SORT_TOP_RATED_DESC = "vote_average.desc";
 
     //constants used to decide which url to build
     private static final String QUERY_MOST_POPULAR = "query most popular";
@@ -111,25 +103,24 @@ public class NetworkUtils {
      */
     private static Uri buildMoviesQueryUri(String queryRequest, int page) {
 
-        Uri.Builder builder = Uri.parse(MOVIE_DB_DISCOVER_BASE_URL).buildUpon()
-                .appendQueryParameter(PARAM_API_KEY, MOVIE_DB_API_KEY)
-                .appendQueryParameter(PARAM_VOTE_COUNT_GTE, VOTE_COUNT_GTE);
-
+        String searchType;
         switch (queryRequest) {
             case QUERY_MOST_POPULAR:
-                builder = builder.appendQueryParameter(PARAM_SORT_BY, SORT_POPULARITY_DESC);
+                searchType = POPULAR;
                 break;
-
             case QUERY_TOP_RATED:
-                builder = builder.appendQueryParameter(PARAM_SORT_BY, SORT_TOP_RATED_DESC);
+                searchType = TOP_RATED;
                 break;
-
             default:
-                builder = builder.appendQueryParameter(PARAM_SORT_BY, SORT_POPULARITY_DESC);
-
+                searchType = POPULAR;
 
         }
-        return builder.appendQueryParameter(PARAM_PAGE, String.valueOf(page)).build();
+
+        return Uri.parse(MOVIE_DB_BASE_URL).buildUpon()
+                .appendPath(searchType)
+                .appendQueryParameter(PARAM_API_KEY, MOVIE_DB_API_KEY)
+                .appendQueryParameter(PARAM_PAGE, String.valueOf(page))
+                .build();
     }
 
     /**
