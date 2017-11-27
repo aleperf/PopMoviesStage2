@@ -1,12 +1,12 @@
 package example.aleperf.com.popmovies.sync;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
-import android.util.Log;
 
 import java.net.URL;
-import java.util.ArrayList;
+
+import android.content.ContentResolver;
+import android.content.ContentValues;
+
 import java.util.List;
 
 import example.aleperf.com.popmovies.data.MoviesContract;
@@ -17,8 +17,6 @@ import example.aleperf.com.popmovies.utilities.NetworkUtils;
 /**
  * Sync the database with the online data
  * Load fresh data for the Top Rated and Most Popular Tables
- *
- *
  */
 
 public class PopMoviesSyncTask {
@@ -43,6 +41,11 @@ public class PopMoviesSyncTask {
             if (jsonResponseMostPopular.size() > 0 && jsonResponseMostPopular.get(0) != null) {
                 contentResolver.delete(
                         MoviesContract.MostPopuplarMoviesEntry.CONTENT_URI, null, null);
+            }
+
+            if (jsonResponseTopRated.size() > 0 && jsonResponseTopRated.get(0) != null) {
+                contentResolver.delete(
+                        MoviesContract.TopRatedMoviesEntry.CONTENT_URI, null, null);
             }
 
 
